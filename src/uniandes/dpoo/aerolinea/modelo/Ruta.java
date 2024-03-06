@@ -5,7 +5,56 @@ package uniandes.dpoo.aerolinea.modelo;
  */
 public class Ruta
 {
-    // TODO completar
+    private Aeropuerto origen;
+    private Aeropuerto destino;
+    private String horaSalida;
+    private String horaLlegada;
+    private String codigoRuta;
+    
+    public Ruta (Aeropuerto origen, Aeropuerto destino, String horaSalida, String horaLlegada,
+    		String codigoRuta) {
+    	this.origen = origen;
+        this.destino = destino;
+        this.horaSalida = horaSalida;
+        this.horaLlegada = horaLlegada;
+        this.codigoRuta = codigoRuta;
+    }
+   
+    public String getCodigoRuta() {
+    	return codigoRuta;
+    }
+    
+    public Aeropuerto getDestino() {
+    	return destino;
+    }
+    
+    public int getDuracion() {
+    	int horasSalida = getHoras(horaSalida);
+        int horasLlegada = getHoras(horaLlegada);
+        int minutosSalida = getMinutos(horaSalida);
+        int minutosLlegada = getMinutos(horaLlegada);
+        int duracionHoras = horasLlegada - horasSalida;
+        int duracionMinutos = minutosLlegada - minutosSalida;
+        
+        if (duracionMinutos < 0) {
+            duracionHoras--;
+            duracionMinutos += 60;
+        }
+
+        return duracionHoras * 60 + duracionMinutos;
+    }
+    
+    public Aeropuerto getOrigen() {
+    	return origen;
+    }
+    
+    public String getHoraSalida() {
+    	return horaSalida;
+    }
+    
+    public String getHoraLlegada() {
+    	return horaLlegada;
+    }
 
 
     /**
@@ -33,6 +82,5 @@ public class Ruta
         int horas = Integer.parseInt( horaCompleta ) / 100;
         return horas;
     }
-
     
 }

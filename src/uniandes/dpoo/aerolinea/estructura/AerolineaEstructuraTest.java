@@ -1,5 +1,8 @@
 package uniandes.dpoo.aerolinea.estructura;
 
-public class AerolineaEstructuraTest {
+import org.junit.Test;
+
+public class AerolineaEstructuraTest
+{
 
 }

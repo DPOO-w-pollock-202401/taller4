@@ -163,7 +163,12 @@ public class Aerolinea
      */
     public Vuelo getVuelo( String codigoRuta, String fechaVuelo )
     {
-        // TODO implementar
+    	for (Vuelo vuelo : vuelos) {
+            if (vuelo.getRuta().getCodigoRuta().equals(codigoRuta) &&
+                    vuelo.getFecha().equals(fechaVuelo)) {
+                return vuelo;
+            }
+        }
         return null;
     }
 
@@ -182,8 +187,11 @@ public class Aerolinea
      */
     public Collection<Tiquete> getTiquetes( )
     {
-        // TODO implementar
-        return null;
+    	 List<Tiquete> allTiquetes = new ArrayList<>();
+    	    for (Vuelo vuelo : vuelos) {
+    	        allTiquetes.addAll(vuelo.getTiquetes());
+    	    }
+    	    return allTiquetes;
 
     }
 
@@ -203,7 +211,8 @@ public class Aerolinea
      */
     public void cargarAerolinea( String archivo, String tipoArchivo ) throws TipoInvalidoException, IOException, InformacionInconsistenteException
     {
-        // TODO implementar
+    	IPersistenciaAerolinea cargador = CentralPersistencia.getPersistenciaAerolinea(tipoArchivo);
+    	cargador.cargarAerolinea(archivo, this);
     }
 
     /**
@@ -215,7 +224,8 @@ public class Aerolinea
      */
     public void salvarAerolinea( String archivo, String tipoArchivo ) throws TipoInvalidoException, IOException
     {
-        // TODO implementar
+        IPersistenciaAerolinea cargador = CentralPersistencia.getPersistenciaAerolinea(tipoArchivo);
+        cargador.salvarAerolinea(tipoArchivo, this);
     }
 
     /**
@@ -265,8 +275,27 @@ public class Aerolinea
      */
     public void programarVuelo( String fecha, String codigoRuta, String nombreAvion ) throws Exception
     {
-        // TODO Implementar el método
+        Avion avion = buscarAvion(nombreAvion);
+        if (avion == null) {
+            throw new Exception("No se encontró un avión con el nombre " + nombreAvion);
+        }
+
+        Ruta ruta = getRuta(codigoRuta);
+        if (ruta == null) {
+            throw new Exception("No se encontró una ruta con el código " + codigoRuta);
+        }
+
     }
+
+    private Avion buscarAvion(String nombreAvion) {
+        for (Avion avion : aviones) {
+            if (avion.getNombre().equals(nombreAvion)) {
+                return avion;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Vende una cierta cantidad de tiquetes para un vuelo, verificando que la información sea correcta.

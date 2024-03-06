@@ -26,7 +26,12 @@ public class CentralPersistencia
      */
     public static IPersistenciaAerolinea getPersistenciaAerolinea( String tipoArchivo ) throws TipoInvalidoException
     {
-        // TODO implementar
+        if(JSON.equals(tipoArchivo)) {
+        	return new PersistenciaAerolineaJson();
+        }else {
+        	throw new TipoInvalidoException(tipoArchivo);
+        }//Implementaría plaintext también, pero no parece ser necesaria para el taller
+         //según lo establecido en la clase 'PersistenciaAerolineaPlaintext.java'
     }
 
     /**
